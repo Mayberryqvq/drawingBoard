@@ -2,7 +2,6 @@ package com.permissionx.drawingboard
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.BounceInterpolator
@@ -12,12 +11,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 class MainActivity : AppCompatActivity() {
 
     private var brushContainerFlag = false
+    private var colorFlag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         brushBtnEvent()
         brushSizeEvent()
+        floatingActionBtnEvent()
     }
 
     private fun brushSizeEvent() {
@@ -44,16 +45,34 @@ class MainActivity : AppCompatActivity() {
         } else {
             brushSizeContainer.visibility = View.GONE
         }
-        val Anim = TranslateAnimation(Animation.ABSOLUTE, 0f, Animation.ABSOLUTE, 0f,
+        val anim = TranslateAnimation(Animation.ABSOLUTE, 0f, Animation.ABSOLUTE, 0f,
             Animation.RELATIVE_TO_SELF, startY, Animation.RELATIVE_TO_SELF, endY).apply {
             duration = 300
             fillAfter = true
             interpolator = BounceInterpolator()
         }
-        brushSizeContainer.startAnimation(Anim)
+        brushSizeContainer.startAnimation(anim)
         brushContainerFlag = !brushContainerFlag
         arrayOf(minSizeBtn, midSizeBtn, largeSizeBtn, giantSizeBtn).forEach {
             it.isEnabled = brushContainerFlag
         }
     }
+
+    private fun floatingActionBtnEvent() {
+        floatingActionButton.setOnClickListener {
+            var space = 0f
+            space = if (colorFlag) convert(this, 70) else -convert(this, 70)
+            val colorBtn = arrayOf(redBtn, orangeBtn, yellowBtn, greenBtn, cyanBtn, blueBtn, purpleBtn)
+            colorBtn.forEach {
+                val index = colorBtn.indexOf(it)
+                it.animate()
+                    .translationYBy(space * (index + 1))
+                    .setDuration(300)
+                    .setInterpolator(BounceInterpolator())
+                    .start()
+            }
+            colorFlag = !colorFlag
+        }
+    }
+
 }
