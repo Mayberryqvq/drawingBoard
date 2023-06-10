@@ -6,13 +6,221 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Hello World!"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/brushSizeContainer"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:background="@color/purple_200"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/operation_container"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/largeSizeBtn"
+            android:layout_width="38dp"
+            android:layout_height="38dp"
+            app:layout_constraintBottom_toBottomOf="@+id/midSizeBtn"
+            app:layout_constraintEnd_toStartOf="@+id/giantSizeBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/midSizeBtn"
+            app:layout_constraintTop_toTopOf="@+id/midSizeBtn"
+            app:srcCompat="@drawable/ic_circle"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/giantSizeBtn"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:layout_constraintBottom_toBottomOf="@+id/largeSizeBtn"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/largeSizeBtn"
+            app:layout_constraintTop_toTopOf="@+id/largeSizeBtn"
+            app:srcCompat="@drawable/ic_circle"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/minSizeBtn"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/midSizeBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_circle"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/midSizeBtn"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            app:layout_constraintBottom_toBottomOf="@+id/minSizeBtn"
+            app:layout_constraintEnd_toStartOf="@+id/largeSizeBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/minSizeBtn"
+            app:layout_constraintTop_toTopOf="@+id/minSizeBtn"
+            app:srcCompat="@drawable/ic_circle"
+            app:tint="@color/white" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/operation_container"
+        android:layout_width="0dp"
+        android:layout_height="60dp"
+        android:background="@color/purple_500"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintHorizontal_bias="0.058"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <ImageView
+            android:id="@+id/pickBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/saveBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_image"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/saveBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/undoBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/pickBtn"
+            app:layout_constraintTop_toTopOf="@+id/pickBtn"
+            app:srcCompat="@drawable/ic_download"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/undoBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/brushBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/saveBtn"
+            app:layout_constraintTop_toTopOf="@+id/saveBtn"
+            app:srcCompat="@drawable/ic_undo"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/brushBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toStartOf="@+id/eraseBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/undoBtn"
+            app:layout_constraintTop_toTopOf="@+id/undoBtn"
+            app:srcCompat="@drawable/ic_brush"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/eraseBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/brushBtn"
+            app:layout_constraintTop_toTopOf="@+id/brushBtn"
+            app:srcCompat="@drawable/ic_paint"
+            app:tint="@color/white" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="12dp"
+        android:layout_marginBottom="12dp"
+        android:clickable="true"
+        app:layout_constraintBottom_toTopOf="@+id/brushSizeContainer"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@drawable/ic_palette"
+        app:tint="@color/white" />
+
+    <ImageView
+        android:id="@+id/blueBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
+        app:srcCompat="@drawable/ic_circle"
+        app:tint="@color/blue" />
+
+    <ImageView
+        android:id="@+id/purpleBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
+        app:srcCompat="@drawable/ic_circle"
+        app:tint="@color/purple" />
+
+    <ImageView
+        android:id="@+id/cyanBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
+        app:srcCompat="@drawable/ic_circle"
+        app:tint="@color/teal_200" />
+
+    <ImageView
+        android:id="@+id/greenBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
+        app:srcCompat="@drawable/ic_circle"
+        app:tint="@color/green" />
+
+    <ImageView
+        android:id="@+id/redBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
+        app:srcCompat="@drawable/ic_circle"
+        app:tint="@color/design_default_color_error" />
+
+    <ImageView
+        android:id="@+id/orangeBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
+        app:srcCompat="@drawable/ic_circle"
+        app:tint="@color/orange" />
+
+    <ImageView
+        android:id="@+id/yellowBtn"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/floatingActionButton"
+        app:layout_constraintEnd_toEndOf="@+id/floatingActionButton"
+        app:layout_constraintStart_toStartOf="@+id/floatingActionButton"
+        app:layout_constraintTop_toTopOf="@+id/floatingActionButton"
+        app:srcCompat="@drawable/ic_circle"
+        app:tint="@android:color/holo_orange_light" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
