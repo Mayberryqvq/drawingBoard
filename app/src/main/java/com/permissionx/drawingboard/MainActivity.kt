@@ -19,12 +19,16 @@ class MainActivity : AppCompatActivity() {
         brushBtnEvent()
         brushSizeEvent()
         floatingActionBtnEvent()
+        colorBtnEvent()
+        eraseBtnEvent()
+        undoBtnEvent()
     }
 
     private fun brushSizeEvent() {
         arrayOf(minSizeBtn, midSizeBtn, largeSizeBtn, giantSizeBtn).forEach {
-            it.setOnClickListener {
+            it.setOnClickListener { _ ->
                 showOrHideBrushContainer(false)
+                drawingView.changeStrokeSize(it.tag.toString().toFloat())
             }
         }
     }
@@ -61,7 +65,7 @@ class MainActivity : AppCompatActivity() {
     private fun floatingActionBtnEvent() {
         floatingActionButton.setOnClickListener {
             var space = 0f
-            space = if (colorFlag) convert(this, 70) else -convert(this, 70)
+            space = if (colorFlag) convert(this, 60) else -convert(this, 60)
             val colorBtn = arrayOf(redBtn, orangeBtn, yellowBtn, greenBtn, cyanBtn, blueBtn, purpleBtn)
             colorBtn.forEach {
                 val index = colorBtn.indexOf(it)
@@ -72,6 +76,26 @@ class MainActivity : AppCompatActivity() {
                     .start()
             }
             colorFlag = !colorFlag
+        }
+    }
+
+    private fun colorBtnEvent() {
+        arrayOf(redBtn, orangeBtn, yellowBtn, greenBtn, cyanBtn, blueBtn, purpleBtn).forEach {
+            it.setOnClickListener { _ ->
+                drawingView.changeColor(it.tag.toString())
+            }
+        }
+    }
+
+    private fun eraseBtnEvent() {
+        eraseBtn.setOnClickListener {
+            drawingView.erase()
+        }
+    }
+
+    private fun undoBtnEvent() {
+        undoBtn.setOnClickListener {
+            drawingView.undo()
         }
     }
 
