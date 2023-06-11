@@ -1,12 +1,19 @@
 package com.permissionx.drawingboard
 
+import android.Manifest
+import android.app.Activity
+import android.content.Context
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.BounceInterpolator
 import android.view.animation.TranslateAnimation
+import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -22,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         colorBtnEvent()
         eraseBtnEvent()
         undoBtnEvent()
+        saveBtnEvent()
     }
 
     private fun brushSizeEvent() {
@@ -98,5 +106,27 @@ class MainActivity : AppCompatActivity() {
             drawingView.undo()
         }
     }
+
+    private fun saveBtnEvent() {
+        saveBtn.setOnClickListener {
+            val bitmap = convertViewToBitMap(drawingView)
+            saveToAlbum(bitmap)
+        }
+    }
+
+    private fun saveToAlbum(bitmap: Bitmap) {
+        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            lifecycleScope.launch {
+                saveImage(bitmap,)
+
+            }
+
+        } else {
+            requestPermission(this)
+        }
+    }
+
+
+
 
 }
