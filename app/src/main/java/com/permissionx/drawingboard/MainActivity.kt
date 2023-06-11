@@ -3,6 +3,7 @@ package com.permissionx.drawingboard
 import android.Manifest
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
@@ -117,8 +118,13 @@ class MainActivity : AppCompatActivity() {
     private fun saveToAlbum(bitmap: Bitmap) {
         if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
             lifecycleScope.launch {
-                saveImage(bitmap,)
-
+                val uri = saveImage(bitmap)
+                val shareIntent = Intent().apply {
+                    action = Intent.ACTION_SEND
+                    putExtra(Intent.EXTRA_STREAM, uri)
+                    type = "image/jpg"
+                }
+                startActivity(Intent.createChooser(shareIntent, "share"))
             }
 
         } else {

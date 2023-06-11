@@ -90,25 +90,14 @@
         app:layout_constraintStart_toStartOf="parent">
 
         <ImageView
-            android:id="@+id/pickBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/saveBtn"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_image"
-            app:tint="@color/white" />
-
-        <ImageView
             android:id="@+id/saveBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/undoBtn"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/pickBtn"
-            app:layout_constraintTop_toTopOf="@+id/pickBtn"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_download"
             app:tint="@color/white" />
 
@@ -116,6 +105,7 @@
             android:id="@+id/undoBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/saveBtn"
             app:layout_constraintEnd_toStartOf="@+id/brushBtn"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/saveBtn"
@@ -127,6 +117,7 @@
             android:id="@+id/brushBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/undoBtn"
             app:layout_constraintEnd_toStartOf="@+id/eraseBtn"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/undoBtn"
@@ -138,6 +129,7 @@
             android:id="@+id/eraseBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="@+id/brushBtn"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/brushBtn"
