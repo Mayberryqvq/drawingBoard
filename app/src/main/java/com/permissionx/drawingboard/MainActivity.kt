@@ -114,8 +114,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveBtnEvent() {
         saveBtn.setOnClickListener {
-            val bitmap = convertViewToBitMap(drawingView)
-            saveToAlbum(bitmap)
+            val bitmap = captureScreenWindow(this)
+            saveToAlbum(bitmap!!)
         }
     }
 
@@ -157,10 +157,6 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun getBitmapFromUri(uri: Uri) = contentResolver.openFileDescriptor(uri, "r")?.use {
-        BitmapFactory.decodeFileDescriptor(it.fileDescriptor)
     }
 
 }

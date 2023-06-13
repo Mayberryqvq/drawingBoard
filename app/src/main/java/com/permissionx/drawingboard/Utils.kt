@@ -5,12 +5,10 @@ import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.graphics.Color
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
-import android.view.View
 import android.widget.Toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -19,16 +17,6 @@ import kotlinx.coroutines.withContext
 fun convert(context: Context, dp: Int): Float {
     return context.resources.displayMetrics.density * dp
 }
-
-//View -> Bitmap
-fun convertViewToBitMap(view: View): Bitmap {
-    val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-    val canvas = Canvas(bitmap)
-    canvas.drawColor(Color.WHITE)
-    view.draw(canvas)
-    return bitmap
-}
-
 
 fun requestPermission(activity: Activity) {
     activity.requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), 1)
@@ -56,5 +44,13 @@ suspend fun saveImage(bitmap: Bitmap): Uri {
         Toast.makeText(MyApplication.context, "保存失败", Toast.LENGTH_LONG).show()
     }
     return uri!!
+}
 
+fun getBitmapFromUri(uri: Uri) = MyApplication.context.contentResolver.openFileDescriptor(uri, "r")?.use {
+    BitmapFactory.decodeFileDescriptor(it.fileDescriptor)
+}
+
+fun captureScreenWindow(activity: Activity): Bitmap? {
+    activity.window.decorView.setDrawingCacheEnabled(true)
+    return activity.window.decorView.getDrawingCache()
 }
