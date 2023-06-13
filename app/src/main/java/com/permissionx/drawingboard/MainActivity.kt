@@ -7,22 +7,21 @@ import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
+import android.provider.MediaStore
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.BounceInterpolator
 import android.view.animation.TranslateAnimation
+import androidx.core.content.FileProvider
 import androidx.lifecycle.lifecycleScope
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.launch
+import java.io.File
 
 class MainActivity : AppCompatActivity() {
-
-    private val fromAlbum = 2
-    private var brushContainerFlag = false
-    private var colorFlag = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         undoBtnEvent()
         saveBtnEvent()
         pickBtnEvent()
+        cameraBtnEvent()
     }
 
     private fun brushSizeEvent() {
@@ -145,9 +145,31 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun cameraBtnEvent() {
+        cameraBtn.setOnClickListener {
+            outputImage = File(externalCacheDir, "output_image.jpg")
+            if (outputImage.exists()) outputImage.delete()
+            outputImage.createNewFile()
+            imageUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                FileProvider.getUriForFile(this, "com.permissionx.drawingboard.fileprovider", outputImage)
+            } else {
+                Uri.fromFile(outputImage)
+            }
+            val intent = Intent("android.media.action.IMAGE_CAPTURE")
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
+            startActivityForResult(intent, takePhoto)
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         when (requestCode) {
+            takePhoto -> {
+                if (resultCode == Activity.RESULT_OK) {
+                    val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
+                    bg.setImageBitmap(rotateIfRequired(bitmap))
+                }
+            }
             fromAlbum -> {
                 if (resultCode == Activity.RESULT_OK && data != null) {
                     data.data?.let { uri ->

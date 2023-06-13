@@ -152,12 +152,24 @@
             android:id="@+id/pickBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/cameraBtn"
             app:layout_constraintEnd_toStartOf="@+id/saveBtn"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/cameraBtn"
+            app:layout_constraintTop_toTopOf="@+id/cameraBtn"
+            app:srcCompat="@drawable/ic_image"
+            app:tint="@color/white" />
+
+        <ImageView
+            android:id="@+id/cameraBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/pickBtn"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_image"
+            app:srcCompat="@drawable/ic_camera"
             app:tint="@color/white" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

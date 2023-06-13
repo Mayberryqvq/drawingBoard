@@ -6,12 +6,22 @@ import android.content.ContentValues
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.Matrix
+import android.media.ExifInterface
 import android.net.Uri
 import android.os.Environment
 import android.provider.MediaStore
 import android.widget.Toast
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import java.io.File
+
+lateinit var outputImage: File
+const val takePhoto =1
+const val fromAlbum = 2
+lateinit var imageUri: Uri
+var brushContainerFlag = false
+var colorFlag = false
 
 //dp -> px
 fun convert(context: Context, dp: Int): Float {
@@ -53,4 +63,23 @@ fun getBitmapFromUri(uri: Uri) = MyApplication.context.contentResolver.openFileD
 fun captureScreenWindow(activity: Activity): Bitmap? {
     activity.window.decorView.setDrawingCacheEnabled(true)
     return activity.window.decorView.getDrawingCache()
+}
+
+fun rotateIfRequired(bitmap: Bitmap): Bitmap {
+    val exif = ExifInterface(outputImage.path)
+    val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
+    return when (orientation) {
+        ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90)
+        ExifInterface.ORIENTATION_ROTATE_180 -> rotateBitmap(bitmap, 180)
+        ExifInterface.ORIENTATION_ROTATE_270 -> rotateBitmap(bitmap, 270)
+        else -> bitmap
+    }
+}
+
+fun rotateBitmap(bitmap: Bitmap, degree: Int): Bitmap {
+    val matrix = Matrix()
+    matrix.postRotate(degree.toFloat())
+    val rotatedBitmap = Bitmap.createBitmap(bitmap, 0, 0, bitmap.width, bitmap.height, matrix, true)
+    bitmap.recycle()
+    return rotatedBitmap
 }
