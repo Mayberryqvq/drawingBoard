@@ -4,3 +4,4 @@
 This is a simple mobile drawing application. You can use select a photo from your phone as the drawing background, use this application as a drawing board and download the picture you have drawn.The drawing function including undo, eraser and change the color or stroke of the pen.
 
 ![image](https://github.com/Mayberryqvq/drawingBoard/blob/master/drawingBoard_demo11.gif)
+[项目对应博客]("https://blog.csdn.net/n0ahmayberry/article/details/131391847?spm=1001.2014.3001.5501)

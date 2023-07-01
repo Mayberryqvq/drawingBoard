@@ -121,13 +121,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun saveToAlbum(bitmap: Bitmap) {
         if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            //使用这种方式启动协程，当lifecycle被销毁时，协程一并销毁
             lifecycleScope.launch {
                 val uri = saveImage(bitmap)
+                //创建一个分享图片的Intent。通过Intent.ACTION_SEND指定动作为发送，使用putExtra将图片Uri添加到Intent中，设置类型为image/jpg
                 val shareIntent = Intent().apply {
                     action = Intent.ACTION_SEND
                     putExtra(Intent.EXTRA_STREAM, uri)
                     type = "image/jpg"
                 }
+                //启动一个选择器界面，允许用户选择分享图片的目标应用程序。用户可以从列表中选择一个应用程序来分享图片
                 startActivity(Intent.createChooser(shareIntent, "share"))
             }
 
@@ -147,14 +150,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun cameraBtnEvent() {
         cameraBtn.setOnClickListener {
+            //创建一个File对象，用于存放摄像头拍下的图片，存放在手机SD卡的应用关联缓存目录下
             outputImage = File(externalCacheDir, "output_image.jpg")
             if (outputImage.exists()) outputImage.delete()
             outputImage.createNewFile()
             imageUri = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                //安卓7.0后，直接使用本地真实路径的URI被认为是不安全的。FileProvider是一种特殊的ContentProvider，可以选择性地将封装过的uri共享给外部，提高了应用安全性
                 FileProvider.getUriForFile(this, "com.permissionx.drawingboard.fileprovider", outputImage)
             } else {
+                //目标图片的本地真实路径
                 Uri.fromFile(outputImage)
             }
+            //隐式Intent，系统会找出能响应该Intent的Activity去启动，会打开照相机程序
             val intent = Intent("android.media.action.IMAGE_CAPTURE")
             intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri)
             startActivityForResult(intent, takePhoto)
@@ -166,6 +173,7 @@ class MainActivity : AppCompatActivity() {
         when (requestCode) {
             takePhoto -> {
                 if (resultCode == Activity.RESULT_OK) {
+                    //将照片解析成bitmap，设置到ImageView中显示出来
                     val bitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(imageUri))
                     bg.setImageBitmap(rotateIfRequired(bitmap))
                 }
