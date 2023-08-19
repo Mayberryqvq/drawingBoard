@@ -11,6 +11,7 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.BounceInterpolator
@@ -77,18 +78,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun floatingActionBtnEvent() {
         floatingActionButton.setOnClickListener {
-            var space = 0f
-            space = if (colorFlag) convert(this, 60) else -convert(this, 60)
-            val colorBtn = arrayOf(redBtn, orangeBtn, yellowBtn, greenBtn, cyanBtn, blueBtn, purpleBtn)
-            colorBtn.forEach {
-                val index = colorBtn.indexOf(it)
-                it.animate()
-                    .translationYBy(space * (index + 1))
-                    .setDuration(300)
-                    .setInterpolator(BounceInterpolator())
-                    .start()
-            }
-            colorFlag = !colorFlag
+            move()
         }
     }
 
@@ -96,12 +86,29 @@ class MainActivity : AppCompatActivity() {
         arrayOf(redBtn, orangeBtn, yellowBtn, greenBtn, cyanBtn, blueBtn, purpleBtn).forEach {
             it.setOnClickListener { _ ->
                 drawingView.changeColor(it.tag.toString())
+                move()
             }
         }
     }
 
+    private fun move() {
+        var space = 0f
+        space = if (colorFlag) convert(this, 60) else -convert(this, 60)
+        val colorBtn = arrayOf(redBtn, orangeBtn, yellowBtn, greenBtn, cyanBtn, blueBtn, purpleBtn)
+        colorBtn.forEach {
+            val index = colorBtn.indexOf(it)
+            it.animate()
+                .translationYBy(space * (index + 1))
+                .setDuration(300)
+                .setInterpolator(BounceInterpolator())
+                .start()
+        }
+        colorFlag = !colorFlag
+    }
+
     private fun eraseBtnEvent() {
         eraseBtn.setOnClickListener {
+            Log.d("erase", "erase")
             drawingView.erase()
         }
     }

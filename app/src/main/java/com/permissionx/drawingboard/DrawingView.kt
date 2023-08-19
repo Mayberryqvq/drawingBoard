@@ -1,10 +1,7 @@
 package com.permissionx.drawingboard
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
+import android.graphics.*
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
@@ -32,12 +29,10 @@ class DrawingView: View {
 
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-        if (pathList.size > 0) {
-            pathList.forEach {
-                mPen.color = it.color
-                mPen.strokeWidth = it.size
-                canvas?.drawPath(it.path, mPen)
-            }
+        pathList.forEach {
+            mPen.color = it.color
+            mPen.strokeWidth = it.size
+            canvas?.drawPath(it.path, mPen)
         }
         if (mPath != null) {
             mPen.color = mColor
@@ -60,7 +55,6 @@ class DrawingView: View {
                 pathList.add(CustomPath(mPath!!, mColor, strokeSize))
                 mPath = null
             }
-
         }
         return true
     }
@@ -79,7 +73,7 @@ class DrawingView: View {
     }
     //橡皮擦功能：将画笔颜色设置为白色即可，不过有个坏处就是会把背景的颜色也给一起涂掉
     fun erase() {
-        mColor  = Color.WHITE
+        mColor = Color.WHITE
     }
 
 }
